@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useLayoutEffect, createRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
 export function ImageGalleryItem({
@@ -9,9 +9,9 @@ export function ImageGalleryItem({
   webImg,
   isAnchor,
 }) {
-  const imageRef = createRef();
+  const imageRef = useRef(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isAnchor) return;
     const y =
       imageRef.current.getBoundingClientRect().top + window.pageYOffset - 80;
@@ -20,7 +20,7 @@ export function ImageGalleryItem({
       top: y,
       behavior: 'smooth',
     });
-  });
+  }, [isAnchor]);
 
   const handleClick = () => {
     onImageClick({ largeImageURL, tags });
